@@ -6,7 +6,6 @@ const fsp = fs.promises;
 const TMP_DIR = path.join(__dirname, '../tmp');
 const SEARCH_RESULTS_PATH = path.join(TMP_DIR, 'search-results.json');
 
-// Helper function to run shell commands
 function runCommand(command) {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
@@ -18,20 +17,19 @@ function runCommand(command) {
     });
 }
 
-// Function to process APKs
 async function processApks() {
     try {
         const apps = JSON.parse(await fsp.readFile(SEARCH_RESULTS_PATH, 'utf-8'));
-        
+
         const dirs = await fsp.readdir(TMP_DIR, { withFileTypes: true });
-        
+
         for (const app of apps) {
             try {
                 const apkName = app.url.split('/').pop() + '.apk';
                 const apkDir = apkName.replace('.apk', '');
                 const apkFilePath = path.join(TMP_DIR, apkDir, `${apkName}`);
                 console.log('Checking for APK at path:', apkFilePath);
-                
+
                 if (dirs.some(dir => dir.isDirectory() && dir.name === apkDir)) {
                     // Check if the APK exists within the directory
                     if (fs.existsSync(apkFilePath)) {
@@ -48,7 +46,7 @@ async function processApks() {
             } catch (error) {
                 console.error(`Error processing app ${app.title}: ${error.message}`);
             }
-           
+
         }
     } catch (error) {
         console.log(error);
@@ -56,5 +54,4 @@ async function processApks() {
     }
 }
 
-// Run the process
 processApks();

@@ -1,22 +1,36 @@
 {
-  "dependencies": {
-    "axios": "^1.8.4",
-    "axios-cookiejar-support": "^6.0.1",
-    "cheerio": "^1.0.0",
-    "cli-progress": "^3.12.0",
-    "puppeteer": "^24.7.1",
-    "unzipper": "^0.12.3"
-  },
-  "name": "android-apk-research",
-  "version": "0.0.1",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "MIT",
-  "description": ""
+    "name": "apk-search-and-audit",
+    "description": "A set of scripts that allows you to search for APK's given a keyword, downloads, extracts, decompiles, and then searches the decompiled APK for defined keywords",
+    "keywords": [
+        "apk",
+        "decompile",
+        "decompiler",
+        "audit",
+        "reverse engineer",
+        "reverse engineering",
+        "pure apk",
+        "apk download"
+    ],
+    "version": "0.0.1",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bin": {
+        "apk-search-and-audit": "./index.js"
+    },
+    "author": "Josh Terrill <josh@hacked.codes>",
+    "license": "MIT",
+    "dependencies": {
+        "adm-zip": "^0.5.16",
+        "axios": "^1.8.4",
+        "axios-cookiejar-support": "^6.0.1",
+        "cheerio": "^1.0.0",
+        "cli-progress": "^3.12.0",
+        "commander": "^13.1.0",
+        "puppeteer": "^24.7.1"
+    }
 }

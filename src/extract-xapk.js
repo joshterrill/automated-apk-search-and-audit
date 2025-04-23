@@ -1,7 +1,7 @@
 const fs = require('fs');;
 const fsp = fs.promises;
 const path = require('path');
-const unzipper = require('unzipper');
+const AdmZip = require('adm-zip');
 
 const TMP_DIR = path.join(__dirname, '../tmp');
 
@@ -23,25 +23,22 @@ async function renameXapkToZip(files) {
 }
 
 async function unzipFiles(files) {
-    for (const file of files) {
-        console.log(file);
-        const zipPath = path.join(TMP_DIR, file.replace('.xapk', '.zip'));
-        const outputDir = path.join(TMP_DIR, file.replace('.zip', ''));
-        console.log(`Unzipping ${file} to ${outputDir}`);
 
-        try {
-            await fsp.mkdir(outputDir, { recursive: true });
-            await new Promise((resolve, reject) => {
-                fs.createReadStream(zipPath)
-                    .pipe(unzipper.Extract({ path: outputDir }))
-                    .on('close', resolve)
-                    .on('error', reject);
-            });
-            console.log(`Unzipped ${file}`);
-        } catch (err) {
-            console.error(`Error unzipping ${file}:`, err);
-        }
-    }
+    files.filter(file => path.extname(file).toLowerCase() === '.zip')
+        .forEach(zipFile => {
+            const zipPath = path.join(TMP_DIR, zipFile);
+            const baseName = path.basename(zipFile, '.zip');
+            const outputDir = path.join(TMP_DIR, baseName);
+
+            try {
+                const zip = new AdmZip(zipPath);
+                zip.extractAllTo(outputDir, true);
+                console.log(`Extracted "${zipFile}" to "${outputDir}"`);
+            } catch (extractErr) {
+                console.error(`Failed to extract ${zipFile}:`, extractErr);
+            }
+        });
+
 }
 
 async function main() {
@@ -54,7 +51,7 @@ async function main() {
         await renameXapkToZip(files);
     }
     files = allFiles.filter(file => file.endsWith('.zip'));
-    
+
     await unzipFiles(files);
 
     console.log('All files unzipped successfully.');
