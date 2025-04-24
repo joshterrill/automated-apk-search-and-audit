@@ -20,7 +20,9 @@ npm i -g .
 
 2. Install `unzip` so `unzip` can be run from CLI.
 
-3. Create a JSON file with the following structure:
+3. Install `apktool` so it can be run from the CLI.
+
+4. Create a JSON file with the following structure:
 
 ```json
 [
@@ -78,3 +80,12 @@ apk-search-and-audit --extract-only
 # etc.
 ```
 
+## Coming soon
+
+1. Paging APK search results
+2. Better error handling
+3. Better file and glob search support
+
+## License
+
+MIT
