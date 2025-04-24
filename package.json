@@ -1,7 +1,7 @@
 {
     "name": "apk-search-and-audit",
     "description": "A set of scripts that allows you to search for APK's given a keyword, downloads, extracts, decompiles, and then searches the decompiled APK for defined keywords",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "index.js",
     "directories": {
         "test": "test"

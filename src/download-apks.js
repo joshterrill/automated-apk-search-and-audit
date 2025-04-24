@@ -3,8 +3,14 @@ const path = require('path');
 const axios = require('axios');
 const cliProgress = require('cli-progress');
 
+const query = process.argv[2];
+if (!query) {
+    console.error('Please provide a search query.');
+    process.exit(1);
+}
+
 const TMP_DIR = path.join(__dirname, '../tmp');
-const SEARCH_RESULTS_PATH = path.join(TMP_DIR, 'search-results.json');
+const SEARCH_RESULTS_PATH = path.join(TMP_DIR, `${query}-search-results.json`);
 
 let lastErroredPackage = null;
 

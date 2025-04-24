@@ -3,8 +3,14 @@ const path = require('path');
 const { exec } = require('child_process');
 const fsp = fs.promises;
 
+const query = process.argv[2];
+if (!query) {
+    console.error('Please provide a search query.');
+    process.exit(1);
+}
+
 const TMP_DIR = path.join(__dirname, '../tmp');
-const SEARCH_RESULTS_PATH = path.join(TMP_DIR, 'search-results.json');
+const SEARCH_RESULTS_PATH = path.join(TMP_DIR, `${query}-search-results.json`);
 
 function runCommand(command) {
     return new Promise((resolve, reject) => {
@@ -31,7 +37,6 @@ async function processApks() {
                 console.log('Checking for APK at path:', apkFilePath);
 
                 if (dirs.some(dir => dir.isDirectory() && dir.name === apkDir)) {
-                    // Check if the APK exists within the directory
                     if (fs.existsSync(apkFilePath)) {
                         console.log(`APK file ${apkName} exists, proceeding with decompiling.`);
                         const cmd = `apktool d ${apkFilePath} -o ${path.join(TMP_DIR, apkDir, 'decompiled')}`;

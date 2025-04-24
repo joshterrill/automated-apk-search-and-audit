@@ -20,7 +20,7 @@ program
     .option('--loot-only', 'Only run loot search')
     .action((apkName, options) => {
         console.log('APK Name:', apkName);
-        const searchResultsPath = path.join(__dirname, 'tmp', 'search-results.json');
+        const searchResultsPath = path.join(__dirname, 'tmp', `${apkName}-search-results.json`);
         const searchResultsExists = fs.existsSync(searchResultsPath);
         const isPartial = isPartialRun();
 
@@ -29,7 +29,7 @@ program
             (!searchResultsExists && !isPartial) || options.lootOnly;
 
         if (!searchResultsExists && !apkName) {
-            console.error('❌ You must provide an apkName, since ./tmp/search-results.json does not exist.');
+            console.error(`❌ You must provide an apkName, since ./tmp/${apkName}-search-results.json does not exist.`);
             process.exit(1);
         }
 

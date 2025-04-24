@@ -2,8 +2,14 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 
+const query = process.argv[2];
+if (!query) {
+    console.error('Please provide a search query.');
+    process.exit(1);
+}
+
 const TMP_DIR = path.join(__dirname, '../tmp');
-const SEARCH_RESULTS_PATH = path.join(TMP_DIR, 'search-results.json');
+const SEARCH_RESULTS_PATH = path.join(TMP_DIR, `${query}-search-results.json`);
 
 if (!fs.existsSync(TMP_DIR)) {
     fs.mkdirSync(TMP_DIR);
@@ -63,6 +69,7 @@ async function searchApkPure(query) {
         });
 
         await browser.close();
+        fs.writeFileSync(SEARCH_RESULTS_PATH, JSON.stringify(results, null, 2));
         return results;
     } catch (error) {
         console.error('Error fetching data from APKPure:', error);
@@ -71,12 +78,4 @@ async function searchApkPure(query) {
     }
 }
 
-(async () => {
-    const query = process.argv[2];
-    if (!query) {
-        console.error('Please provide a search query.');
-        process.exit(1);
-    }
-    const results = await searchApkPure(query);
-    fs.writeFileSync(SEARCH_RESULTS_PATH, JSON.stringify(results, null, 2));
-})();
+searchApkPure(query);
