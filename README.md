@@ -18,9 +18,9 @@ npm i -g .
 
 1. Install ripgrep so `rg` can be run from CLI.
 
-2. Install 
+2. Install `unzip` so `unzip` can be run from CLI.
 
-Create a JSON file with the following structure:
+3. Create a JSON file with the following structure:
 
 ```json
 [
@@ -38,7 +38,7 @@ Create a JSON file with the following structure:
 ]
 ```
 
-When no `fileTypes` property is passed through on a keyword, it will search all files.
+When no `fileTypes` property is passed through on a keyword, it will search all files. `fileTypes` supported come from the `rigrep` supported file types.
 
 This file is passed in as part of the `--globs path/to/your/file.json`.
 
