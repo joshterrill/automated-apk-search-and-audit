@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
+
+
 const TMP_DIR = path.join(__dirname, '../tmp');
 const OUTPUT_FILE = path.join(TMP_DIR, 'loot-search.json');
 
